@@ -1,0 +1,94 @@
+Given an infinite supply of each denomination of Indian currency { 1, 2, 5, 10, 20, 50, 100, 200, 500, 2000 } and a target value N.
+Find the minimum number of coins and/or notes needed to make the change for Rs N. You must return the list containing the value of coins required. 
+
+
+Example 1:
+
+Input: N = 43
+Output: 20 20 2 1
+Explaination: 
+Minimum number of coins and notes needed 
+to make 43. 
+
+class Solution{
+public:
+    vector<int> minPartition(int v)
+    {
+        // code here
+        vector <int>v1;int j=0;
+        
+        int a[10]= { 1,2,5,10,20,50,100,200,500,2000};
+        for (int i =0;i<10;i++){
+            
+            if (a[i]< v && a[i+1]> v){
+                 j =i ;
+                break;
+            }
+            if (a[i]==v){
+                v1.push_back (a[i]);
+                return v1;
+            }
+            
+        }
+        
+        while (v >0 && j >=0){
+            
+                while (v>=a[j]){
+                    v = v-a[j];
+                   v1.push_back(a[j]) ;
+                    
+                }
+                j--;
+            }
+        
+   return v1; }
+};
+
+
+
+
+
+
+
+
+solution 2:
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// All denominations of Indian Currency
+int deno[] = { 1, 2, 5, 10, 20,
+               50, 100, 500, 1000 };
+int n = sizeof(deno) / sizeof(deno[0]);
+
+void findMin(int V)
+{
+    sort(deno, deno + n);
+
+    // Initialize result
+    vector<int> ans;
+
+    // Traverse through all denomination
+    for (int i = n - 1; i >= 0; i--) {
+
+        // Find denominations
+        while (V >= deno[i]) {
+            V -= deno[i];
+            ans.push_back(deno[i]);
+        }
+    }
+
+    // Print result
+    for (int i = 0; i < ans.size(); i++)
+        cout << ans[i] << " ";
+}
+
+// Driver program
+int main()
+{
+    int n = 93;
+    cout << "Following is minimal"
+         << " number of change for " << n
+         << ": ";
+    findMin(n);
+    return 0;
